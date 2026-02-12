@@ -1,5 +1,71 @@
-# Vue 3 + Vite
+# Progetto Vue.js 1 – Tic Tac Toe (Tris)
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Interactive implementation of the classic Tic Tac Toe game built with **Vue.js 3** using the Composition API.
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+Live Demo:  
+👉 https://progetto-vuejs-1-tris.netlify.app
+
+GitHub Repository:  
+👉 https://github.com/treccaniandrea6-prog/progetto-vuejs-1-tris
+
+---
+
+## Project Overview
+
+This project is a fully interactive web version of the classic 3x3 Tic Tac Toe game.
+
+Two players alternate turns (X and O).  
+The application automatically:
+
+- Detects winning combinations
+- Detects draw scenarios
+- Prevents invalid moves
+- Allows full game reset
+
+The interface updates reactively without page reloads, ensuring a smooth user experience.
+
+---
+
+## Technologies Used
+
+- Vue.js 3
+- Composition API
+- Vite
+- Reactive state management (`ref`, `computed`)
+- Netlify (Deployment)
+
+---
+
+## Technical Implementation
+
+### State Management
+
+The game state is handled using Vue’s reactivity system:
+
+- `ref` for board state and player turn
+- `computed` for dynamic game status
+- Winner detection through predefined winning combinations
+
+### Game Logic
+
+- 9-cell reactive board array
+- Turn alternation logic (X / O)
+- Win condition check after each move
+- Draw detection when the board is full
+- Disabled cells after game completion
+
+### UI Structure
+
+- Grid layout using CSS Grid
+- Scoped component styling
+- Clean separation between logic and presentation
+
+---
+
+## Installation & Setup
+
+Clone the repository:
+
+```bash
+git clone https://github.com/treccaniandrea6-prog/progetto-vuejs-1-tris.git
+```
