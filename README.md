@@ -62,10 +62,20 @@ The game state is handled using Vue’s reactivity system:
 
 ---
 
-## Installation & Setup
+## Installation & Local Development
 
 Clone the repository:
 
-```bash
 git clone https://github.com/treccaniandrea6-prog/progetto-vuejs-1-tris.git
-```
+
+Navigate into the project:
+
+cd progetto-vuejs-1-tris
+
+Install dependencies:
+
+npm install
+
+Start development server:
+
+npm run dev
