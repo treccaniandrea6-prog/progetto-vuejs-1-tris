@@ -1,9 +1,12 @@
 <script setup>
 import { ref, computed } from "vue";
+import GameBoard from "./components/GameBoard.vue";
+import GameStatus from "./components/GameStatus.vue";
 
-const board = ref(Array(9).fill(null)); // 9 celle: null | "X" | "O"
-const xIsNext = ref(true); // true = X, false = O
-const winner = ref(null); // "X" | "O" | null
+const board = ref(Array(9).fill(null));
+const xIsNext = ref(true);
+const winner = ref(null);
+const winningCells = ref([]);
 
 const winningCombinations = [
   [0, 1, 2],
@@ -29,15 +32,16 @@ const status = computed(() => {
 function checkWinner() {
   for (const [a, b, c] of winningCombinations) {
     const v = board.value[a];
+
     if (v && v === board.value[b] && v === board.value[c]) {
       winner.value = v;
+      winningCells.value = [a, b, c];
       return;
     }
   }
 }
 
 function handleClick(index) {
-  // blocca click se: cella già piena, c'è un vincitore, o è pareggio
   if (board.value[index] || winner.value || isDraw.value) return;
 
   const newBoard = [...board.value];
@@ -46,7 +50,6 @@ function handleClick(index) {
 
   checkWinner();
 
-  // cambia turno SOLO se non c'è un vincitore
   if (!winner.value) {
     xIsNext.value = !xIsNext.value;
   }
@@ -56,25 +59,23 @@ function resetGame() {
   board.value = Array(9).fill(null);
   xIsNext.value = true;
   winner.value = null;
+  winningCells.value = [];
 }
 </script>
 
 <template>
   <div class="container">
     <h1>Tic Tac Toe (Tris)</h1>
-    <p class="status">{{ status }}</p>
 
-    <div class="board">
-      <button
-        v-for="(cell, index) in board"
-        :key="index"
-        class="cell"
-        :disabled="!!cell || !!winner || isDraw"
-        @click="handleClick(index)"
-      >
-        {{ cell }}
-      </button>
-    </div>
+    <GameStatus :status="status" :winner="winner" :isDraw="isDraw" />
+
+    <GameBoard
+      :board="board"
+      :winner="winner"
+      :isDraw="isDraw"
+      :winningCells="winningCells"
+      @cell-click="handleClick"
+    />
 
     <button class="reset" @click="resetGame">Reset Game</button>
   </div>
@@ -85,37 +86,25 @@ function resetGame() {
   text-align: center;
   font-family: Arial, sans-serif;
   padding: 40px;
+  min-height: 100vh;
+  background: #f4f6f8;
 }
 
-.board {
-  display: grid;
-  grid-template-columns: repeat(3, 100px);
-  gap: 10px;
-  justify-content: center;
-  margin: 20px 0;
-}
-
-.cell {
-  width: 100px;
-  height: 100px;
-  font-size: 32px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.cell:disabled {
-  cursor: not-allowed;
-  opacity: 0.9;
-}
-
-.status {
-  font-size: 20px;
-  margin-bottom: 10px;
+h1 {
+  margin-bottom: 16px;
 }
 
 .reset {
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  background: #222;
+  color: white;
+}
+
+.reset:hover {
+  opacity: 0.9;
 }
 </style>
